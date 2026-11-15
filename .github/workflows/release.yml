@@ -1,0 +1,50 @@
+name: release
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Next version
+        id: ver
+        run: |
+          set -euo pipefail
+          VERSION="$(MANIFEST=fleet.theme.yaml bash scripts/next-version.sh)"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+      - name: Sync manifest version
+        run: bash scripts/sync-manifest-version.sh fleet.theme.yaml "${{ steps.ver.outputs.version }}"
+      - name: Pack
+        run: make pack
+      - name: Create release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          name: ${{ steps.ver.outputs.tag }}
+          generate_release_notes: true
+          files: |
+            dist/*.tar.gz
+            dist/SHA256SUMS
+      - name: Notify Official bucket
+        env:
+          GH_TOKEN: ${{ secrets.FLEET_BUCKET_TOKEN }}
+          TAG: ${{ steps.ver.outputs.tag }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "skip dispatch: FLEET_BUCKET_TOKEN unset"
+            exit 0
+          fi
+          jq -n --arg src "$REPO" --arg tag "$TAG" \
+            '{event_type:"fleet-release",client_payload:{source:$src,tag:$tag}}' \
+            | gh api repos/krate-apps/fleet-official-bucket/dispatches --input -

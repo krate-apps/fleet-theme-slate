@@ -1,0 +1,37 @@
+:root[data-fleet-theme="slate"] {
+  --fleet-background: #0b0f14;
+  --fleet-foreground: #d7dde5;
+  --fleet-surface: #121820;
+  --fleet-surface-2: #1a222d;
+  --fleet-surface-3: #222b38;
+  --fleet-fg-muted: #8b98a8;
+  --fleet-border: #2a3544;
+  --fleet-border-soft: #1c2531;
+  --fleet-input: #0e141c;
+  --fleet-primary: #5b8def;
+  --fleet-primary-fg: #0b0f14;
+  --fleet-primary-text: #7aa2f7;
+  --fleet-accent: #89b4fa;
+  --fleet-accent-text: #89b4fa;
+  --fleet-destructive: #f38ba8;
+  --fleet-destructive-text: #f38ba8;
+  --fleet-ring: #89b4fa;
+  --fleet-focus: rgba(137, 180, 250, 0.3);
+  --fleet-header-gradient: linear-gradient(to right, #5b8def, #89b4fa);
+  --fleet-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  --fleet-pill-bg: rgba(0, 0, 0, 0.3);
+  --fleet-speed-down: #89b4fa;
+  --fleet-speed-up: #a6e3a1;
+  --fleet-prg-start: #5b8def;
+  --fleet-prg-end: #89b4fa;
+  --fleet-state-downloading: #89b4fa;
+  --fleet-state-seeding: #a6e3a1;
+  --fleet-state-paused: #f9e2af;
+  --fleet-state-stopped: #8b98a8;
+  --fleet-state-error: #f38ba8;
+  --fleet-icon: #8b98a8;
+  --fleet-icon-hover: #d7dde5;
+  --fleet-status-ok: #a6e3a1;
+  --fleet-status-warn: #f9e2af;
+  --fleet-status-bad: #f38ba8;
+}

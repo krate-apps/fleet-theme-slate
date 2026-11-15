@@ -1,0 +1,8 @@
+schema: 1
+id: org.fleet.theme.slate
+name: Slate
+description: Fleet Slate appearance pack (installable theme).
+version: 1.0.0
+colorScheme: dark
+css: theme.css
+uiThemeId: slate
